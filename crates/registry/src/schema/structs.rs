@@ -1457,6 +1457,7 @@ pub enum DnsServer {
     Vultr(DnsServerCloud),
     WebSupport(DnsServerWebSupport),
     YandexCloud(DnsServerYandexCloud),
+    MijnHost(DnsServerCloud),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -1672,6 +1673,7 @@ pub enum DnsServerBootstrap {
     Vultr(DnsServerCloud),
     WebSupport(DnsServerWebSupport),
     YandexCloud(DnsServerYandexCloud),
+    MijnHost(DnsServerCloud),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]

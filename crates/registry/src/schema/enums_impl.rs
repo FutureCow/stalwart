@@ -3021,6 +3021,7 @@ impl EnumImpl for DnsServerBootstrapType {
             b"Vultr" => DnsServerBootstrapType::Vultr,
             b"WebSupport" => DnsServerBootstrapType::WebSupport,
             b"YandexCloud" => DnsServerBootstrapType::YandexCloud,
+            b"MijnHost" => DnsServerBootstrapType::MijnHost,
         }
         .copied()
     }
@@ -3098,6 +3099,7 @@ impl EnumImpl for DnsServerBootstrapType {
             DnsServerBootstrapType::Vultr => "Vultr",
             DnsServerBootstrapType::WebSupport => "WebSupport",
             DnsServerBootstrapType::YandexCloud => "YandexCloud",
+            DnsServerBootstrapType::MijnHost => "MijnHost",
         }
     }
 
@@ -3178,6 +3180,7 @@ impl EnumImpl for DnsServerBootstrapType {
             68 => Some(DnsServerBootstrapType::Vultr),
             69 => Some(DnsServerBootstrapType::WebSupport),
             70 => Some(DnsServerBootstrapType::YandexCloud),
+            71 => Some(DnsServerBootstrapType::MijnHost),
             _ => None,
         }
     }
@@ -3279,6 +3282,7 @@ impl EnumImpl for DnsServerType {
             b"Vultr" => DnsServerType::Vultr,
             b"WebSupport" => DnsServerType::WebSupport,
             b"YandexCloud" => DnsServerType::YandexCloud,
+            b"MijnHost" => DnsServerType::MijnHost,
         }
         .copied()
     }
@@ -3355,6 +3359,7 @@ impl EnumImpl for DnsServerType {
             DnsServerType::Vultr => "Vultr",
             DnsServerType::WebSupport => "WebSupport",
             DnsServerType::YandexCloud => "YandexCloud",
+            DnsServerType::MijnHost => "MijnHost",
         }
     }
 
@@ -3434,6 +3439,7 @@ impl EnumImpl for DnsServerType {
             67 => Some(DnsServerType::Vultr),
             68 => Some(DnsServerType::WebSupport),
             69 => Some(DnsServerType::YandexCloud),
+            70 => Some(DnsServerType::MijnHost),
             _ => None,
         }
     }

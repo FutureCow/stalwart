@@ -648,6 +648,7 @@ fn map_dns_server(dns_server: &DnsServerBootstrap) -> Option<registry::schema::s
         DnsServerBootstrap::Vultr(inner) => DnsServer::Vultr(inner.clone()).into(),
         DnsServerBootstrap::WebSupport(inner) => DnsServer::WebSupport(inner.clone()).into(),
         DnsServerBootstrap::YandexCloud(inner) => DnsServer::YandexCloud(inner.clone()).into(),
+        DnsServerBootstrap::MijnHost(inner) => DnsServer::MijnHost(inner.clone()).into(),
     }
 }
 
