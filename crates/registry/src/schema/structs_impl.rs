@@ -10555,6 +10555,7 @@ impl ObjectImpl for DnsServer {
             DnsServer::WebSupport(inner) => inner.validate(errors),
             DnsServer::YandexCloud(inner) => inner.validate(errors),
             DnsServer::PowerDns(inner) => inner.validate(errors),
+            DnsServer::MijnHost(inner) => inner.validate(errors),
         }
     }
 
@@ -10769,6 +10770,9 @@ impl ObjectImpl for DnsServer {
                 object.index(i);
             }
             DnsServer::PowerDns(object) => {
+                object.index(i);
+            }
+            DnsServer::MijnHost(object) => {
                 object.index(i);
             }
         }
@@ -11067,6 +11071,10 @@ impl Pickle for DnsServer {
                 70u16.pickle(out);
                 inner.pickle(out);
             }
+            DnsServer::MijnHost(inner) => {
+                99u16.pickle(out);
+                inner.pickle(out);
+            }
         }
     }
 
@@ -11143,6 +11151,7 @@ impl Pickle for DnsServer {
             68 => Pickle::unpickle(stream).map(DnsServer::WebSupport),
             69 => Pickle::unpickle(stream).map(DnsServer::YandexCloud),
             70 => Pickle::unpickle(stream).map(DnsServer::PowerDns),
+            99 => Pickle::unpickle(stream).map(DnsServer::MijnHost),
             _ => None,
         }
     }
@@ -11646,6 +11655,13 @@ impl IntoValue for DnsServer {
                     .insert_unchecked(Property::Type, JmapValue::Str("PowerDns".into()));
                 obj
             }
+            DnsServer::MijnHost(obj) => {
+                let mut obj = obj.into_value();
+                obj.as_object_mut()
+                    .unwrap()
+                    .insert_unchecked(Property::Type, JmapValue::Str("MijnHost".into()));
+                obj
+            }
         }
     }
 }
@@ -11731,6 +11747,7 @@ impl RegistryJsonPatch for DnsServer {
                 DnsServerType::WebSupport => *self = DnsServer::WebSupport(Default::default()),
                 DnsServerType::YandexCloud => *self = DnsServer::YandexCloud(Default::default()),
                 DnsServerType::PowerDns => *self = DnsServer::PowerDns(Default::default()),
+                DnsServerType::MijnHost => *self = DnsServer::MijnHost(Default::default()),
             }
         }
         match self {
@@ -11805,6 +11822,7 @@ impl RegistryJsonPatch for DnsServer {
             DnsServer::WebSupport(inner) => inner.patch(pointer, value),
             DnsServer::YandexCloud(inner) => inner.patch(pointer, value),
             DnsServer::PowerDns(inner) => inner.patch(pointer, value),
+            DnsServer::MijnHost(inner) => inner.patch(pointer, value),
         }
     }
 }
@@ -11883,6 +11901,7 @@ impl DnsServer {
             DnsServer::WebSupport(_) => DnsServerType::WebSupport,
             DnsServer::YandexCloud(_) => DnsServerType::YandexCloud,
             DnsServer::PowerDns(_) => DnsServerType::PowerDns,
+            DnsServer::MijnHost(_) => DnsServerType::MijnHost,
         }
     }
 }
@@ -12719,6 +12738,7 @@ impl DnsServerBootstrap {
             DnsServerBootstrap::WebSupport(inner) => inner.validate(errors),
             DnsServerBootstrap::YandexCloud(inner) => inner.validate(errors),
             DnsServerBootstrap::PowerDns(inner) => inner.validate(errors),
+            DnsServerBootstrap::MijnHost(inner) => inner.validate(errors),
         }
     }
 }
@@ -13018,6 +13038,10 @@ impl Pickle for DnsServerBootstrap {
                 71u16.pickle(out);
                 inner.pickle(out);
             }
+            DnsServerBootstrap::MijnHost(inner) => {
+                99u16.pickle(out);
+                inner.pickle(out);
+            }
         }
     }
 
@@ -13095,6 +13119,7 @@ impl Pickle for DnsServerBootstrap {
             69 => Pickle::unpickle(stream).map(DnsServerBootstrap::WebSupport),
             70 => Pickle::unpickle(stream).map(DnsServerBootstrap::YandexCloud),
             71 => Pickle::unpickle(stream).map(DnsServerBootstrap::PowerDns),
+            99 => Pickle::unpickle(stream).map(DnsServerBootstrap::MijnHost),
             _ => None,
         }
     }
@@ -13603,6 +13628,13 @@ impl IntoValue for DnsServerBootstrap {
                     .insert_unchecked(Property::Type, JmapValue::Str("PowerDns".into()));
                 obj
             }
+            DnsServerBootstrap::MijnHost(obj) => {
+                let mut obj = obj.into_value();
+                obj.as_object_mut()
+                    .unwrap()
+                    .insert_unchecked(Property::Type, JmapValue::Str("MijnHost".into()));
+                obj
+            }
         }
     }
 }
@@ -13823,6 +13855,9 @@ impl RegistryJsonPatch for DnsServerBootstrap {
                 DnsServerBootstrapType::PowerDns => {
                     *self = DnsServerBootstrap::PowerDns(Default::default())
                 }
+                DnsServerBootstrapType::MijnHost => {
+                    *self = DnsServerBootstrap::MijnHost(Default::default())
+                }
             }
         }
         match self {
@@ -13898,6 +13933,7 @@ impl RegistryJsonPatch for DnsServerBootstrap {
             DnsServerBootstrap::WebSupport(inner) => inner.patch(pointer, value),
             DnsServerBootstrap::YandexCloud(inner) => inner.patch(pointer, value),
             DnsServerBootstrap::PowerDns(inner) => inner.patch(pointer, value),
+            DnsServerBootstrap::MijnHost(inner) => inner.patch(pointer, value),
         }
     }
 }
@@ -13977,6 +14013,7 @@ impl DnsServerBootstrap {
             DnsServerBootstrap::WebSupport(_) => DnsServerBootstrapType::WebSupport,
             DnsServerBootstrap::YandexCloud(_) => DnsServerBootstrapType::YandexCloud,
             DnsServerBootstrap::PowerDns(_) => DnsServerBootstrapType::PowerDns,
+            DnsServerBootstrap::MijnHost(_) => DnsServerBootstrapType::MijnHost,
         }
     }
 }
