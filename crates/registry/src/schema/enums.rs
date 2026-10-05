@@ -619,6 +619,7 @@ pub enum DnsServerBootstrapType {
     WebSupport = 69,
     YandexCloud = 70,
     PowerDns = 71,
+    MijnHost = 99,
 }
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -696,6 +697,7 @@ pub enum DnsServerType {
     WebSupport = 68,
     YandexCloud = 69,
     PowerDns = 70,
+    MijnHost = 99,
 }
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Hash)]

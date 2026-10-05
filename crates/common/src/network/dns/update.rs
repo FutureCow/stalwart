@@ -1124,6 +1124,18 @@ impl DnsUpdater {
                         .map_err(|err| format!("Failed to build DNS updater: {}", err))?,
                 })
             }
+            DnsServer::MijnHost(server) => Ok(DnsUpdater {
+                polling_interval: server.polling_interval.into_inner(),
+                propagation_timeout: server.propagation_timeout.into_inner(),
+                propagation_delay: server.propagation_delay.map(|d| d.into_inner()),
+                ttl: server.ttl.into_inner(),
+                core,
+                updater: dns_update::DnsUpdater::new_mijnhost(
+                    server.secret.secret().await?,
+                    server.timeout.into_inner().into(),
+                )
+                .map_err(|err| format!("Failed to build DNS updater: {}", err))?,
+            }),
             DnsServer::Deprecated1 => Err("DNS server type no longer supported".to_string()),
         }
     }

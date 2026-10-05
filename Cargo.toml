@@ -35,6 +35,9 @@ members = [
 [workspace.lints.clippy]
 result_unit_err = "allow"
 
+[patch.crates-io]
+dns-update = { git = "https://github.com/FutureCow/dns-update", branch = "mijnhost-0.5.10" }
+
 [profile.dev]
 opt-level = 0
 debug = 1
