@@ -101,6 +101,16 @@ impl<'x> PickledStream<'x> {
     }
 
     #[inline(always)]
+    pub(crate) fn position(&self) -> usize {
+        self.pos
+    }
+
+    #[inline(always)]
+    pub(crate) fn rewind(&mut self, pos: usize) {
+        self.pos = pos;
+    }
+
+    #[inline(always)]
     pub fn bytes(&self) -> &'_ [u8] {
         self.data.as_ref()
     }
@@ -271,5 +281,61 @@ impl Pickle for trc::Key {
 
     fn unpickle(stream: &mut PickledStream<'_>) -> Option<Self> {
         u16::unpickle(stream).and_then(Self::from_id)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::schema::structs::{
+        DnsServer, DnsServerCloud, DnsServerPowerDns, SecretKey, SecretKeyValue,
+    };
+
+    fn decode(bytes: &[u8]) -> Option<DnsServer> {
+        DnsServer::unpickle(&mut PickledStream::new(bytes)?)
+    }
+
+    #[test]
+    fn legacy_mijnhost_id_decodes_as_mijnhost() {
+        let cloud = DnsServerCloud {
+            secret: SecretKey::Value(SecretKeyValue {
+                secret: "0123456789abcdef0123456789abcdef".into(),
+            }),
+            description: "mijn.host".into(),
+            ..Default::default()
+        };
+
+        // The same bytes are not a valid PowerDNS record
+        let mut payload = vec![0u8];
+        cloud.pickle(&mut payload);
+        let mut stream = PickledStream::new(&payload).unwrap();
+        assert!(
+            DnsServerPowerDns::unpickle(&mut stream)
+                .filter(|_| stream.eof())
+                .is_none()
+        );
+
+        // Record as written by the fork before v0.16.25: variant id 70
+        let mut legacy = vec![0u8];
+        70u16.pickle(&mut legacy);
+        cloud.pickle(&mut legacy);
+        assert_eq!(decode(&legacy), Some(DnsServer::MijnHost(cloud.clone())));
+
+        // Saving it again moves it to id 99
+        let mut current = vec![0u8];
+        DnsServer::MijnHost(cloud.clone()).pickle(&mut current);
+        assert_eq!(current[1], 99);
+        assert_eq!(decode(&current), Some(DnsServer::MijnHost(cloud)));
+
+        // A real PowerDNS record under id 70 is still read as PowerDNS
+        let pdns = DnsServerPowerDns {
+            description: "pdns".into(),
+            endpoint: Some("http://localhost:8081".into()),
+            ..Default::default()
+        };
+        let mut bytes = vec![0u8];
+        DnsServer::PowerDns(pdns.clone()).pickle(&mut bytes);
+        assert_eq!(bytes[1], 70);
+        assert_eq!(decode(&bytes), Some(DnsServer::PowerDns(pdns)));
     }
 }

@@ -11153,7 +11153,19 @@ impl Pickle for DnsServer {
             67 => Pickle::unpickle(stream).map(DnsServer::Vultr),
             68 => Pickle::unpickle(stream).map(DnsServer::WebSupport),
             69 => Pickle::unpickle(stream).map(DnsServer::YandexCloud),
-            70 => Pickle::unpickle(stream).map(DnsServer::PowerDns),
+            70 => {
+                // Before v0.16.25 this fork stored mijn.host under id 70, which upstream
+                // then assigned to PowerDNS. Such a record does not decode as PowerDNS,
+                // so read it as mijn.host; it is written back under id 99.
+                let pos = stream.position();
+                match DnsServerPowerDns::unpickle(stream).filter(|_| stream.eof()) {
+                    Some(inner) => Some(DnsServer::PowerDns(inner)),
+                    None => {
+                        stream.rewind(pos);
+                        Pickle::unpickle(stream).map(DnsServer::MijnHost)
+                    }
+                }
+            }
             99 => Pickle::unpickle(stream).map(DnsServer::MijnHost),
             _ => None,
         }
