@@ -2197,7 +2197,7 @@ dependencies = [
 [[package]]
 name = "dns-update"
 version = "0.5.10"
-source = "git+https://github.com/FutureCow/dns-update?branch=mijnhost-0.5.10#85016168a529c94b3e5175ae88b20ea6a818fb03"
+source = "git+https://github.com/FutureCow/dns-update?branch=mijnhost-0.5.10#ccf9d96a8fb3fb7861f748e124d14a5c00a4b668"
 dependencies = [
  "aws-lc-rs",
  "encodify",
