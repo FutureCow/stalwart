@@ -1665,6 +1665,7 @@ pub enum DnsServer {
     WebSupport(DnsServerWebSupport),
     YandexCloud(DnsServerYandexCloud),
     PowerDns(DnsServerPowerDns),
+    MijnHost(DnsServerCloud),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -1881,6 +1882,7 @@ pub enum DnsServerBootstrap {
     WebSupport(DnsServerWebSupport),
     YandexCloud(DnsServerYandexCloud),
     PowerDns(DnsServerPowerDns),
+    MijnHost(DnsServerCloud),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]

@@ -133,6 +133,7 @@ overflow-checks = false
 rpath = false
 
 [patch.crates-io]
+dns-update = { git = "https://github.com/FutureCow/dns-update", branch = "mijnhost-0.6.0" }
 hickory-proto = { git = "https://github.com/stalwartlabs/hickory-dns", branch = "stalwart/0.26" }
 hickory-net = { git = "https://github.com/stalwartlabs/hickory-dns", branch = "stalwart/0.26" }
 hickory-resolver = { git = "https://github.com/stalwartlabs/hickory-dns", branch = "stalwart/0.26" }
