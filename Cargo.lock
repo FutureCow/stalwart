@@ -1704,8 +1704,7 @@ dependencies = [
 [[package]]
 name = "dns-update"
 version = "0.6.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "44ec078c42b2652b9b04880d6eb00892806f370e7c5604c6ed625f4cc1d171e6"
+source = "git+https://github.com/FutureCow/dns-update?branch=mijnhost-0.6.1#111e8c9494c2dd08b36b37d9bb305b6c123e8ae4"
 dependencies = [
  "aws-lc-rs",
  "encodify",
